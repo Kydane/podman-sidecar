@@ -8,7 +8,7 @@ if [ ! -d "/var/run/podman" ]; then
     # Additional commands can go here
 fi
 
-podman system service --time=0 unix://${FILE} > podman.log 2>&1 &
+podman system service --time=0 "unix://${FILE}" > podman.log 2>&1 &
 bg_pid=$!
 until [ -e "$FILE" ]; do
   echo "Waiting for $FILE to be created..."
