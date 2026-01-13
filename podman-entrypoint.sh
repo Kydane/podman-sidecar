@@ -9,7 +9,7 @@ if [ ! -d "/var/run/podman" ]; then
 fi
 
 podman system service --time=0 unix://${FILE} > podman.log 2>&1 &
-
+bg_pid=$!
 until [ -e "$FILE" ]; do
   echo "Waiting for $FILE to be created..."
   sleep 1 # Wait for 1 second before checking again
@@ -17,4 +17,5 @@ done
 
 echo "$FILE has been created. Proceeding..."
 chmod 777 ${FILE}
-tail -F podman.log
+trap "echo 'Stopping...'; kill -TERM $bg_pid; wait $bg_pid; exit 0" SIGTERM SIGINT
+wait $bg_pid
