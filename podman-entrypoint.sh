@@ -1,7 +1,7 @@
 #!/bin/bash
 
 FILE="/var/run/podman/podman.sock"
-export CONTAINER_HOST
+unset CONTAINER_HOST
 
 if [ ! -d "/var/run/podman" ]; then
     echo "Directory does not exist. Creating it now."
