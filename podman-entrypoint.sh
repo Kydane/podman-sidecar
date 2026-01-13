@@ -1,14 +1,13 @@
 #!/bin/bash
 
 FILE="/var/run/podman/podman.sock"
-export CONTAINER_HOST=
+export CONTAINER_HOST
 
 if [ ! -d "/var/run/podman" ]; then
     echo "Directory does not exist. Creating it now."
     mkdir -p /var/run/podman
     # Additional commands can go here
 fi
-
 podman system service --time=0 unix:///var/run/podman/podman.sock > podman.log 2>&1 &
 bg_pid=$!
 until [ -e "$FILE" ]; do
